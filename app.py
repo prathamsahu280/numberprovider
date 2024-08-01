@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 def get_operator_circle(number):
-    url = f"https://digitalapiproxy.paytm.com/v1/mobile/getopcirclebyrange?channel=web&version=2&number={number}&child_site_id=1&site_id=1&locale=en-in"
+    url = f"https://digitalapiproxy.paytm.com/v1/mobile/getopcirclebyrange?number={number}"
     try:
         response = requests.get(url)
         response.raise_for_status()  # Raise an exception for HTTP errors
