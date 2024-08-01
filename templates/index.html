@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operator and Circle Finder</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Find Operator and Circle</h1>
+    <form method="post">
+        <label for="numbers">Enter phone numbers (one per line or comma-separated):</label><br>
+        <textarea id="numbers" name="numbers" rows="10" cols="30"></textarea><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if results %}
+    <h2>Results:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Phone Number</th>
+                <th>Operator</th>
+                <th>Circle</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+            <tr>
+                <td>{{ result.number }}</td>
+                <td>{{ result.operator }}</td>
+                <td>{{ result.circle }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</body>
+</html>
