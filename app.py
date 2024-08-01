@@ -6,11 +6,24 @@ app = Flask(__name__)
 
 def get_operator_circle(number):
     url = f"https://digitalapiproxy.paytm.com/v1/mobile/getopcirclebyrange?channel=web&version=2&number={number}&child_site_id=1&site_id=1&locale=en-in"
-    response = requests.get(url)
-    data = response.json()
-    if response.status_code == 200 and 'Operator' in data and 'Circle' in data:
-        return data['Operator'], data['Circle']
-    return None, None
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an exception for HTTP errors
+        # Check if the response content type is JSON
+        if response.headers.get('Content-Type') == 'application/json':
+            data = response.json()
+            if 'Operator' in data and 'Circle' in data:
+                return data['Operator'], data['Circle']
+        # If the response is not JSON or does not contain the expected fields
+        return None, None
+    except requests.exceptions.RequestException as e:
+        # Log the error
+        print(f"Request failed: {e}")
+        return None, None
+    except ValueError as e:
+        # Handle JSON decoding errors
+        print(f"JSON decoding failed: {e}")
+        return None, None
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
