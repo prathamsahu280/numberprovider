@@ -9,21 +9,20 @@ def get_operator_circle(number):
     try:
         response = requests.get(url)
         response.raise_for_status()  # Raise an exception for HTTP errors
-        # Check if the response content type is JSON
+        print(f"Response status code: {response.status_code}")
+        print(f"Response content: {response.text}")
         if response.headers.get('Content-Type') == 'application/json':
             data = response.json()
             if 'Operator' in data and 'Circle' in data:
                 return data['Operator'], data['Circle']
-        # If the response is not JSON or does not contain the expected fields
         return None, None
     except requests.exceptions.RequestException as e:
-        # Log the error
         print(f"Request failed: {e}")
         return None, None
     except ValueError as e:
-        # Handle JSON decoding errors
         print(f"JSON decoding failed: {e}")
         return None, None
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
